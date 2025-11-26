@@ -1,0 +1,214 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Curriculum Vitae</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="The Curriculum Vitae." />
+    <meta charset="UTF-8">
+    <link type="text/css" rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link href='https://fonts.googleapis.com/css?family=Rokkitt:400,700|Lato:400,300' rel='stylesheet' type='text/css'>
+   <!--[if lt IE 9]>
+<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+</head>
+<body id="top">
+    <div id="actions" class="action-bar">
+        <button class="ghost-btn" onclick="window.print()">Download / Print</button>
+        <button class="ghost-btn" onclick="window.location.href='{% url 'info' %}'">Build Another</button>
+        <button class="ghost-btn" onclick="copyLink()">Share Link</button>
+    </div>
+    <div id="cv" class="instaFade">
+        <div class="mainDetails">
+            <div id="headshot" class="quickFade">
+                <img src="{% static 'images/headshot.jpg' %}" alt="{{ name }}" />
+            </div>
+            
+            <div id="name">
+                <h1 class="quickFade delayTwo">{{ name|default:"Your Name" }}</h1>
+                {% if job_title %}<h2 class="quickFade delayThree">{{ job_title }}</h2>{% endif %}
+            </div>
+
+            <div id="contactDetails" class="quickFade delayFour">
+                <ul>
+                    {% if email %}<li><span>Email</span> <a href="mailto:{{email}}">{{email}}</a></li>{% endif %}
+                    {% if mobile %}<li><span>Phone</span> {{mobile}}</li>{% endif %}
+                    {% if address %}<li><span>Address</span> {{address}}</li>{% endif %}
+                    {% if linkedin %}<li><span>LinkedIn</span> <a href="{{linkedin}}" target="_blank" rel="noopener">{{linkedin}}</a></li>{% endif %}
+                    {% if portfolio %}<li><span>Portfolio</span> <a href="{{portfolio}}" target="_blank" rel="noopener">{{portfolio}}</a></li>{% endif %}
+                    {% if github %}<li><span>GitHub</span> <a href="{{github}}" target="_blank" rel="noopener">{{github}}</a></li>{% endif %}
+                </ul>
+            </div>
+            <div class="clear"></div>
+
+        </div>
+
+        <div id="mainArea" class="quickFade delayFive">
+            {% if summary %}
+            <section>
+                <article>
+                    <div class="sectionTitle">
+                        <h1>Professional Summary</h1>
+                    </div>
+                    <div class="sectionContent">
+                        <p class="summary">{{summary}}</p>
+                    </div>
+                </article>
+                <div class="clear"></div>
+            </section>
+            {% endif %}
+
+            {% if experience_1_title or experience_1_desc %}
+            <section>
+                <div class="sectionTitle">
+                    <h1>Work Experience</h1>
+                </div>
+                <div class="sectionContent">
+                    {% if experience_1_title or experience_1_desc %}
+                    <article>
+                        {% if experience_1_title %}<h2>{{experience_1_title}}</h2>{% endif %}
+                        {% if experience_1_dur %}<p class="subDetails">{{experience_1_dur}}</p>{% endif %}
+                        {% if experience_1_desc %}<p>{{experience_1_desc}}</p>{% endif %}
+                    </article>
+                    {% endif %}
+                    {% if experience_2_title or experience_2_desc %}
+                    <article>
+                        {% if experience_2_title %}<h2>{{experience_2_title}}</h2>{% endif %}
+                        {% if experience_2_dur %}<p class="subDetails">{{experience_2_dur}}</p>{% endif %}
+                        {% if experience_2_desc %}<p>{{experience_2_desc}}</p>{% endif %}                   
+                    </article>
+                    {% endif %}
+                </div>
+                <div class="clear"></div>
+            </section>
+            {% endif %}
+
+            {% if skills_1 or skills_2 or skills_3 or skills_4 %}
+            <section>
+                <div class="sectionTitle">
+                    <h1>Key Skills</h1>
+                </div>
+                <div class="sectionContent">
+                    <div class="chip-group">
+                        {% if skills_1 %}<span class="chip">{{skills_1}}</span>{% endif %}
+                        {% if skills_2 %}<span class="chip">{{skills_2}}</span>{% endif %}
+                        {% if skills_3 %}<span class="chip">{{skills_3}}</span>{% endif %}
+                        {% if skills_4 %}<span class="chip">{{skills_4}}</span>{% endif %}
+                    </div>
+                </div>
+                <div class="clear"></div>
+            </section>
+            {% endif %}
+
+            {% if education_1 or education_2 %}
+            <section>
+                <div class="sectionTitle">
+                    <h1>Education</h1>
+                </div>
+                <div class="sectionContent">
+                    {% if education_1 %}
+                    <article>
+                        <h2>{{education_1}}</h2>
+                        {% if education_1_dur %}<p class="subDetails">{{education_1_dur}}</p>{% endif %}
+                        {% if education1_score %}<p>Score : {{education1_score}}</p>{% endif %}
+                    </article>
+                    {% endif %}
+                    {% if education_2 %}
+                    <article>
+                        <h2>{{education_2}}</h2>
+                        {% if education_2_dur %}<p class="subDetails">{{education_2_dur}}</p>{% endif %}
+                        {% if education2_score %}<p>Score : {{education2_score}}</p>{% endif %}
+                    </article>
+                    {% endif %}
+                </div>
+                <div class="clear"></div>
+            </section>
+            {% endif %}
+
+            {% if projects %}
+            <section>
+                <div class="sectionTitle">
+                    <h1>Projects</h1>
+                </div>
+                <div class="sectionContent project-grid">
+                    {% for project in projects %}
+                        <article class="project-card">
+                            <div class="project-header">
+                                <h2>{{project.title}}</h2>
+                                {% if project.link %}
+                                    <a href="{{project.link}}" target="_blank" rel="noopener" class="badge-link">View</a>
+                                {% endif %}
+                            </div>
+                            <p>{{project.description}}</p>
+                        </article>
+                    {% endfor %}
+                </div>
+                <div class="clear"></div>
+            </section>
+            {% endif %}
+
+            {% if certification_list %}
+            <section>
+                <div class="sectionTitle">
+                    <h1>Certifications</h1>
+                </div>
+                <div class="sectionContent">
+                    <div class="badge-group">
+                        {% for cert in certification_list %}
+                            <span class="badge">{{cert}}</span>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="clear"></div>
+            </section>
+            {% endif %}
+
+            {% if hobby_list %}
+            <section>
+                <div class="sectionTitle">
+                    <h1>Interests</h1>
+                </div>
+                <div class="sectionContent">
+                    <ul class="hobby-list">
+                        {% for hobby in hobby_list %}
+                            <li>{{hobby}}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                <div class="clear"></div>
+            </section>
+            {% endif %}
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+
+        document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+    </script>
+
+    <script type="text/javascript">
+        var pageTracker = _gat._getTracker("UA-3753241-1");
+
+        pageTracker._initData();
+
+        pageTracker._trackPageview();
+    </script>
+    <script>
+        function copyLink() {
+            if (!navigator.clipboard) {
+                return;
+            }
+            navigator.clipboard.writeText(window.location.href).then(function () {
+                const btns = document.querySelectorAll('.ghost-btn');
+                const target = btns[2];
+                const previous = target.textContent;
+                target.textContent = 'Link Copied!';
+                setTimeout(()=>target.textContent=previous,2000);
+            });
+        }
+    </script>
+</body>
+
+</html>
+

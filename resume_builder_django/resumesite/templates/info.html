@@ -1,0 +1,47 @@
+{% load crispy_forms_tags %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Resume Builder</title>
+    <meta name="viewport" content="width=device-width" />
+    <meta name="description" content="The Curriculum Vitae." />
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <style>
+        body {
+            background: linear-gradient(120deg,#dbeafe,#fef9c3);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 12px;
+        }
+        .builder-shell {
+            width: min(1100px, 100%);
+            background: #fff;
+            border-radius: 18px;
+            box-shadow: 0 20px 60px rgba(15,23,42,.12);
+            padding: 35px 25px;
+        }
+        .builder-shell h1 {
+            text-align: center;
+            font-weight: 700;
+            color: #0f172a;
+        }
+        .helper-text {
+            text-align: center;
+            color: #475569;
+            margin-bottom: 30px;
+        }
+    </style>
+</head>
+<body>
+    <div class="builder-shell">
+        <h1>Build Your Resume</h1>
+        <p class="helper-text">Fill the details below and instantly preview a responsive, print-ready resume.</p>
+        {% crispy form form.helper %}
+    </div>
+</body>
+
+</html>
